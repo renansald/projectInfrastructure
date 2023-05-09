@@ -1,0 +1,64 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: tfvalidate
+    jobs:
+      - job: validate
+        continueOnError: false
+        steps:
+          - task: TerraformInstaller@1
+            displayName: tf install
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              backendServiceArm: 'sc-azure'
+              backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
+              backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
+              backendAzureRmContainerName: '$(TF_VAR_CONTAINER_NAME)'
+              backendAzureRmKey: '$(TF_VAR_KEY)'
+          - task: TerraformTaskV4@4
+            displayName: validate
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+  - stage: tfdeploy
+    condition: succeeded('tfvalidate')
+    dependsOn: 'tfvalidate'
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            displayName: tf install
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              backendServiceArm: 'sc-azure'
+              backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
+              backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
+              backendAzureRmContainerName: '$(TF_VAR_CONTAINER_NAME)'
+              backendAzureRmKey: '$(TF_VAR_KEY)'
+          - task: TerraformTaskV4@4
+            displayName: 'plan'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              environmentServiceNameAzureRM: 'sc-azure'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              environmentServiceNameAzureRM: 'sc-azure'
