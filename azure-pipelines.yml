@@ -5,20 +5,17 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: installSshKey
-    jobs:
-      - job: 'installSsh'
-        steps:
-          - task: InstallSSHKey@0
-            inputs:
-              knownHostsEntry: '$(knownHostsEntry)'
-              sshPublicKey: '$(sshPublicKey)'
-              sshKeySecureFile: id_rsa
   - stage: tfvalidate
     jobs:
       - job: validate
         continueOnError: false
         steps:
+          - task: InstallSSHKey@0
+            displayName: installSsh
+            inputs:
+              knownHostsEntry: '$(knownHostsEntry)'
+              sshPublicKey: '$(sshPublicKey)'
+              sshKeySecureFile: id_rsa
           - task: TerraformInstaller@1
             displayName: tf install
             inputs:
@@ -44,6 +41,12 @@ stages:
     jobs:
       - job: apply
         steps:
+          - task: InstallSSHKey@0
+            displayName: installSsh
+            inputs:
+              knownHostsEntry: '$(knownHostsEntry)'
+              sshPublicKey: '$(sshPublicKey)'
+              sshKeySecureFile: id_rsa
           - task: TerraformInstaller@1
             displayName: tf install
             inputs:
