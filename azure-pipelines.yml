@@ -18,7 +18,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
               backendServiceArm: 'sc-azure'
               backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
               backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
@@ -43,7 +43,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
               backendServiceArm: 'sc-azure'
               backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
               backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
@@ -54,11 +54,11 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
               environmentServiceNameAzureRM: 'sc-azure'
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/resourceGroup/resource_group'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
               environmentServiceNameAzureRM: 'sc-azure'
