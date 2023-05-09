@@ -5,6 +5,15 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+  - stage: installSshKey
+    jobs:
+      - job: 'installSsh'
+        steps:
+          - task: InstallSSHKey@0
+            inputs:
+              knownHostsEntry: '$(knownHostsEntry)'
+              sshPublicKey: '$(sshPublicKey)'
+              sshKeySecureFile: id_rsa
   - stage: tfvalidate
     jobs:
       - job: validate
