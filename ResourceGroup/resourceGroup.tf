@@ -12,7 +12,7 @@ locals {
 }
 
 module "rg" {
-    source               = "git::ssh://renanlinhares01@dev.azure.com/renanlinhares01/terraform/_git/terraform//resourceGroup/rg-module"
+    source               = "git::ssh://git@ssh.dev.azure.com:v3/renanlinhares01/terraform/terraform//resourceGroup/rg-module"
 
     env                  = local.env
     responsable          = local.responsable
