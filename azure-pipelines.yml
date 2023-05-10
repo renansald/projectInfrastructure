@@ -7,7 +7,7 @@ pool:
 stages:
   - stage: tfvalidate
     jobs:
-      - job: validate
+      - job: validateResourceGroup
         continueOnError: false
         steps:
           - task: InstallSSHKey@0
@@ -32,6 +32,21 @@ stages:
               backendAzureRmKey: '$(TF_VAR_KEY)'
           - task: TerraformTaskV4@4
             displayName: validate
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Database/resource'
+              backendServiceArm: 'sc-azure'
+              backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
+              backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
+              backendAzureRmContainerName: '$(TF_VAR_CONTAINER_NAME)'
+              backendAzureRmKey: '$(TF_VAR_KEY)'
+          - task: TerraformTaskV4@4
+            displayName: validateDatabase
             inputs:
               provider: 'azurerm'
               command: 'validate'
@@ -73,4 +88,28 @@ stages:
               provider: 'azurerm'
               command: 'apply'
               workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
+              environmentServiceNameAzureRM: 'sc-azure'
+            - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Database/resource'
+              backendServiceArm: 'sc-azure'
+              backendAzureRmResourceGroupName: '$(TF_VAR_RESOURCE_GROUP_NAME)'
+              backendAzureRmStorageAccountName: '$(TF_VAR_STORAGE_ACCOUNT_NAME)'
+              backendAzureRmContainerName: '$(TF_VAR_CONTAINER_NAME)'
+              backendAzureRmKey: '$(TF_VAR_KEY)'
+          - task: TerraformTaskV4@4
+            displayName: 'plan database'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Database/resource'
+              environmentServiceNameAzureRM: 'sc-azure'
+          - task: TerraformTaskV4@4
+            displayName: apply database
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Database/resource'
               environmentServiceNameAzureRM: 'sc-azure'
