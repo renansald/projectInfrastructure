@@ -38,9 +38,10 @@ module "mysql_server" {
 }
 
 module "mysql_db" {
-    source      = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql"
-    env         = local.env
-    responsable = local.responsable
-    name        = "db_application"
-    server_id   = module.mysql_server.server_id
+    source              = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql"
+    env                 = local.env
+    responsable         = local.responsable
+    name                = "db_application"
+    server_name         = module.mysql_server.name
+    resource_group_name = module.rg.rg_name
 }
