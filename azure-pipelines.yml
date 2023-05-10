@@ -89,7 +89,7 @@ stages:
               command: 'apply'
               workingDirectory: '$(System.DefaultWorkingDirectory)/ResourceGroup'
               environmentServiceNameAzureRM: 'sc-azure'
-            - task: TerraformTaskV4@4
+          - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
               command: 'init'
