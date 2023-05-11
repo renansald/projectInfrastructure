@@ -6,7 +6,6 @@ pool:
 
 stages:
   - stage: tfdestroy
-    condition: succeeded('tfvalidate')
     jobs:
       - job: destroy
         continueOnError: false
