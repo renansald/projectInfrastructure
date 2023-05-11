@@ -19,7 +19,7 @@ resource "random_string" "password" {
 }
 
 module "mysql_server" {
-    source                        = "./modules/mysqlserver" 
+    source                        = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//mysqlserver" 
     env                           = local.env
     responsable                   = local.responsable
     name                          = "application"
@@ -37,11 +37,11 @@ module "mysql_server" {
     BACKEND_KEY                   = "${var.KEY}"
 }
 
-module "mysql_db" {
-    source              = "./modules/mysql"
-    env                 = local.env
-    responsable         = local.responsable
-    name                = "db_application"
-    server_name         = module.mysql_server.name
-    resource_group_name = module.rg.rg_name
-}
+# module "mysql_db" {
+#     source              = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql"
+#     env                 = local.env
+#     responsable         = local.responsable
+#     name                = "db_application"
+#     server_name         = module.mysql_server.name
+#     resource_group_name = module.rg.rg_name
+# }
