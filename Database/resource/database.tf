@@ -19,7 +19,7 @@ resource "random_string" "password" {
 }
 
 module "mysql_server" {
-    source                        = "../mysqlserver_module" 
+    source                        = "./mysqlserver_module" 
     env                           = local.env
     responsable                   = local.responsable
     name                          = "application"
