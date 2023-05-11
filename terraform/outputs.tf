@@ -4,11 +4,11 @@ output "resource_group_id"{
 }
 
 output "administrator_login" {
-    value       = module.mysql_server.administrator_login
+    value       = module.mysql_server.user_name
     description = "Database user"
 }
 
 output "administrator_login_password"{
-    value       = module.mysql_server.administrator_login_password
+    value       = module.mysql_server.password
     description = "Database password"
 }
