@@ -62,13 +62,9 @@ module "mysql_server" {
 module "mysql_db" {
     source              = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql"
     env                 = local.env
-    responsable         = local.responsable
     name                = "db_application"
     server_name         = module.mysql_server.name
     resource_group_name = module.rg.rg_name
-    tag                 = { environment = local.env, 
-                            responsable = local.responsable
-                          }
     BACKEND_CONTAINER_NAME        = "${var.CONTAINER_NAME}"
     BACKEND_RESOURCE_GROUP_NAME   = "${var.RESOURCE_GROUP_NAME}"
     BACKEND_STORAGE_ACCOUNT_NAME  = "${var.STORAGE_ACCOUNT_NAME}"
