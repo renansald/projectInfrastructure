@@ -11,5 +11,5 @@ output "administrator_login" {
 output "administrator_login_password"{
     value       = module.mysql_server.password
     description = "Database password"
-    sensitive   = true
+    sensitive   = false
 }
