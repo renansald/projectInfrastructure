@@ -49,8 +49,8 @@ module "mysql_server" {
     resource_group_name           = module.rg.rg_name
     sku_name                      = "B_Gen4_1"
     version_server                = "8.0"
-    administration_login          = random_string.admin.result
-    administration_login_password = random_string.password.result
+    administrator_login          = random_string.admin.result
+    administrator_login_password = random_string.password.result
     public_network_access_enabled = true
     instance = 1
     BACKEND_CONTAINER_NAME        = "${var.CONTAINER_NAME}"
