@@ -9,7 +9,6 @@ output "administrator_login" {
 }
 
 output "administrator_login_password"{
-    value       = module.mysql_server.password
+    value       = random_string.password.result
     description = "Database password"
-    sensitive   = false
 }
