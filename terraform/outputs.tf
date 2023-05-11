@@ -3,12 +3,12 @@ output "resource_group_id"{
     description = "Resource group id"
 }
 
-output "administration_login" {
-    value       = module.mysql_server.administration_login
+output "administrator_login" {
+    value       = module.mysql_server.administrator_login
     description = "Database user"
 }
 
-output "administration_login_password"{
-    value       = module.mysql_server.administration_login_password
+output "administrator_login_password"{
+    value       = module.mysql_server.administrator_login_password
     description = "Database password"
 }
