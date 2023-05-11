@@ -47,7 +47,7 @@ module "mysql_server" {
     name                          = "application"
     location                      = module.rg.region
     resource_group_name           = module.rg.rg_name
-    sku_name                      = "B_Gen4_1"
+    sku_name                      = "B_Gen5_1"
     version_server                = "8.0"
     administrator_login          = random_string.admin.result
     administrator_login_password = random_string.password.result
