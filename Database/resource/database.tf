@@ -19,7 +19,7 @@ resource "random_string" "password" {
 }
 
 module "mysql_server" {
-    source                        = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//mysqlserver/" 
+    source                        = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//mysqlserver" 
     env                           = local.env
     responsable                   = local.responsable
     name                          = "application"
