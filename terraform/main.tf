@@ -66,4 +66,11 @@ module "mysql_db" {
     name                = "db_application"
     server_name         = module.mysql_server.name
     resource_group_name = module.rg.rg_name
+    tag                 = { environment = local.env, 
+                            responsable = local.responsable
+                          }
+    BACKEND_CONTAINER_NAME        = "${var.CONTAINER_NAME}"
+    BACKEND_RESOURCE_GROUP_NAME   = "${var.RESOURCE_GROUP_NAME}"
+    BACKEND_STORAGE_ACCOUNT_NAME  = "${var.STORAGE_ACCOUNT_NAME}"
+    BACKEND_KEY                   = "${var.KEY}"
 }
