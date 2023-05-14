@@ -64,7 +64,7 @@ module "mysql_db" {
 
 module "mysql_firewall" {
   source              = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql_firewall"
-  name                = "allow-all"
+  rule_name           = "allow-all"
   resource_group_name = module.rg.rg_name
   server_name         = module.mysql_server.name
   start_ip_address    = "0.0.0.0"
