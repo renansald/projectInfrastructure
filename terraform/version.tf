@@ -13,11 +13,9 @@ terraform {
     key                   = var.BACKEND_KEY
     use_azuread_auth      = true
 
-    # features {
-    #   provider_locking {
-    #     enable = true
-    #   }
-    # }
+    features {
+      backend{}
+    }
   }
   
   required_version = ">= 1.0, <2.0"
