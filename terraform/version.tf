@@ -13,4 +13,9 @@ terraform {
     use_azuread_auth      = true
   }
     required_version = ">= 1.0, <2.0"
+  features {
+    provider_locking {
+      enable = true
+    }
+  }
 }
