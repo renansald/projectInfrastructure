@@ -16,11 +16,3 @@ output "administrator_login_password"{
 output "fqdn" {
   value = module.mysql_server.fqdn
 }
-
-output "database_user"{
-    value = mysql_user.db_user.user
-}
-
-output "database_password"{
-    value = mysql_user.db_user.plaintext_password
-}
