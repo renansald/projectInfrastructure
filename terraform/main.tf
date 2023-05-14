@@ -71,3 +71,35 @@ module "mysql_firewall" {
   end_ip_address      = "255.255.255.255"
 }
 
+provider "mysql" {
+  endpoint = "${module.mysql_server.fqnd}:3306"
+  username = "${module.mysql_server.user_name}@${module.mysql_server.name}"
+  password = module.mysql_server.password
+  tls      = true
+}
+
+resource "random_password" "database_password" {
+  length      = 20
+  min_upper   = 2
+  min_lower   = 2
+  min_numeric = 2
+  min_special = 2
+}
+resource "random_string" "username" {
+  length           = 5
+  special          = false
+  override_special = "/@£$"
+}
+
+resource "mysql_user" "db_user" {
+  user               = random_string.user_name.result
+  host               = "%"
+  plaintext_password = random_string.database_password.result
+}
+
+resource "mysql_grant" "user_access" {
+  user       = mysql_user.db_user.user
+  host       = mysql_user.db_user.host
+  database   = var.database_name
+  privileges = ["SELECT", "UPDATE", "DELETE", "EXECUTE", "INSERT"]
+}
