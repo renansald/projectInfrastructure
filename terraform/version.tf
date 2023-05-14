@@ -14,7 +14,9 @@ terraform {
     use_azuread_auth      = true
 
     features {
-      backend{}
+      provider_locking {
+        enable = true
+      }
     }
   }
   

@@ -62,7 +62,8 @@ module "mysql_db" {
     resource_group_name = module.rg.rg_name
 }
 
-resource "azurerm_mysql_firewall_rule" "allow_all" {
+module "mysql_firewall" {
+  source              = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysql_firewall"
   name                = "allow-all"
   resource_group_name = module.rg.rg_name
   server_name         = module.mysql_server.name
