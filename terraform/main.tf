@@ -19,12 +19,12 @@ locals {
 
 
 module "rg" {
-    source                       = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/rg-module"
+    source      = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/rg-module"
 
-    env                          = local.env
-    responsable                  = local.responsable
-    region                       = local.region
-    rg_name                      = local.rg_name
+    env         = local.env
+    responsable = local.responsable
+    region      = local.region
+    rg_name     = local.rg_name
 }
 
 #DATABASE
@@ -48,8 +48,8 @@ module "mysql_server" {
     resource_group_name           = module.rg.rg_name
     sku_name                      = "B_Gen5_1"
     version_server                = "8.0"
-    administrator_login          = random_string.admin.result
-    administrator_login_password = random_string.password.result
+    administrator_login           = random_string.admin.result
+    administrator_login_password  = random_string.password.result
     public_network_access_enabled = true
     instance = 1
 }
@@ -64,7 +64,7 @@ module "mysql_db" {
 
 resource "azurerm_mysql_firewall_rule" "allow_all" {
   name                = "allow-all"
-  resource_group_name = module.rg_rg_name
+  resource_group_name = module.rg.rg_name
   server_name         = module.mysql_server.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "255.255.255.255"
