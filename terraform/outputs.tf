@@ -12,3 +12,7 @@ output "administrator_login_password"{
     value       = random_string.password.result
     description = "Database password"
 }
+
+output "fqdn" {
+  value = module.mysql_server.fqdn
+}

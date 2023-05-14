@@ -40,7 +40,7 @@ resource "random_string" "password" {
 }
 
 module "mysql_server" {
-    source                        = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//mysqlserver" 
+    source                        = "git::ssh://git@ssh.dev.azure.com/v3/renanlinhares01/terraform/terraform//Azure/mysqlserver" 
     env                           = local.env
     responsable                   = local.responsable
     name                          = "application"
@@ -61,3 +61,12 @@ module "mysql_db" {
     server_name         = module.mysql_server.name
     resource_group_name = module.rg.rg_name
 }
+
+resource "azurerm_mysql_firewall_rule" "allow_all" {
+  name                = "allow-all"
+  resource_group_name = module.rg_rg_name
+  server_name         = module.mysql_server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "255.255.255.255"
+}
+
